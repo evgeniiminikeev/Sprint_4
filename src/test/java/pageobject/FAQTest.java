@@ -1,4 +1,4 @@
-package page_object;
+package pageobject;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
@@ -11,13 +11,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 @RunWith(Parameterized.class)
-public class ShouldOpenAnswersInFaq {
+public class FAQTest {
     private WebDriver driver;
     private final int indexOfFaq;
     private final String expectedQuestion;
     private final String expectedAnswer;
 
-    public ShouldOpenAnswersInFaq(int indexOfFaq, String expectedQuestion, String expectedAnswer) {
+    public FAQTest(int indexOfFaq, String expectedQuestion, String expectedAnswer) {
         this.indexOfFaq = indexOfFaq;
         this.expectedQuestion = expectedQuestion;
         this.expectedAnswer = expectedAnswer;
@@ -53,7 +53,7 @@ public class ShouldOpenAnswersInFaq {
     }
 
     @Test
-    public void checkOpeningQuestions() {
+    public void shouldOpenFAQ() {
         MainPage mainPage = new MainPage(driver);
         mainPage.openPage();
         mainPage.openQuestionByIndex(indexOfFaq);

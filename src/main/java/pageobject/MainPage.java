@@ -1,4 +1,4 @@
-package page_object;
+package pageobject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -11,7 +11,9 @@ public class MainPage {
     private final WebDriver driver;
     private final WebDriverWait driverWait;
     //Локатор кнопки "Заказать", которая сверху
-    private final By makeOrderButtonLocator = By.xpath(".//button[@class='Button_Button__ra12g']");
+    private final By makeOrderFirstButtonLocator = By.xpath(".//button[@class='Button_Button__ra12g']");
+    //Локатор кнопки "Заказать", которая внизу
+    private final By makeOrderSecondButtonLocator = By.xpath(".//button[@class='Button_Button__ra12g Button_UltraBig__UU3Lp']");
     //Локатор кнопок раздела "Вопросы о важном"
     private final By questionElementButtonLocator = By.xpath(".//div[contains(@id,'accordion__heading')]");
     //Локатор текста ответов на вопросы в разделе "Вопросы о важном"
@@ -27,10 +29,16 @@ public class MainPage {
         driver.get("https://qa-scooter.praktikum-services.ru/");
     }
     //Нажатие на первую кнопку совершения заказа
-    public void clickMakeOrderButton() {
-        driver.findElement(makeOrderButtonLocator).click();
+    public void clickMakeOrderFirstButton() {
+        driver.findElement(makeOrderFirstButtonLocator).click();
     }
-
+    //Нажатие на вторую кнопку совершения заказа
+    public void clickMakeOrderSecondButton() {
+        driverWait.until(ExpectedConditions.visibilityOfElementLocated(makeOrderFirstButtonLocator));
+        WebElement element = driver.findElements(makeOrderFirstButtonLocator).get(0);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();",element);
+        element.click();
+    }
     //Получение текста вопроса раздела "Вопросы о важном" по его порядковому номеру
     public String getTextOfQuestionByIndex(int indexOfFaq) {
         return driver.findElements(questionElementButtonLocator).get(indexOfFaq).getText();
